@@ -20,15 +20,17 @@ export default function Tasks() {
             id: Date.now(),
             text: input,
             done: false,
-            date: new Date().toLocaleDateString()
+            date: new Date().toLocaleDateString() // под Иркутское времм просто
         }]);
         setInput('');
     };
 
     const toggleTask = (id) => {
-        setTasks(tasks.map(t => t.id === id ? {...t, done: !t.done} : t));
+        setTasks(tasks.map(t => t.id == id ? {...t, done: !t.done} : t)); // Помечаем как выполненную, если поставили галочку
     };
 
+
+    // Удалённые - просто не будем выводить, отфильтруем
     const clearDone = () => {
         setTasks(tasks.filter(t => !t.done));
     };
@@ -37,9 +39,11 @@ export default function Tasks() {
         t.text.toLowerCase().includes(search.toLowerCase())
     );
 
-    const total = tasks.length;
-    const done = tasks.filter(t => t.done).length;
+    const total = tasks.length // всего заданий
+    const done = tasks.filter(t => t.done).length; // выполненные задания
 
+
+    // Если задача выполнена - просто вычёркиваем её(linethrough)
     return (
         <div style={{padding: 20}}>
             <h2>Мои задачи</h2>
@@ -72,7 +76,7 @@ export default function Tasks() {
                         checked={task.done}
                         onChange={() => toggleTask(task.id)}
                     />
-                    <span style={{textDecoration: task.done ? 'line-through' : 'none'}}>
+                <span style={{textDecoration: task.done ? 'line-through' : 'none'}}> 
                         {task.text}
                     </span>
                     <small> {task.date}</small>
